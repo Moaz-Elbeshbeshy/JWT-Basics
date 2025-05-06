@@ -7,16 +7,13 @@ const authorizationMiddleware = async (req, res, next) => {
         throw new UnauthenticatedError('No token provided')
     }
     const token = authHeader.split(' ')[1]
-
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const { id, username } = decoded
+        const { id, username } = jwt.verify(token, process.env.JWT_SECRET)
         req.user = { id, username }
         next()
     } catch (error) {
         throw new UnauthenticatedError('Not authorized to access this route')
     }
-
 }
 
 module.exports = authorizationMiddleware

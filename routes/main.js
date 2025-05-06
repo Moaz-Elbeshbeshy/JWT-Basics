@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { login, dashboard } = require('../controllers/main')
 const authMiddleware = require('../middleware/auth')
-
+const { login, dashboard } = require('../controller/main')
 
 
 router.route('/login').post(login)
