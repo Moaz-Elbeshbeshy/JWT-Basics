@@ -1,0 +1,79 @@
+[
+    {
+        "username": "John Doe",
+        "age": 25,
+        "company": "marcos",
+        "role": "admin",
+        "password": "Doe"
+    },
+    {
+        "username": "Alice Smith",
+        "age": 29,
+        "company": "liddy",
+        "role": "user",
+        "password": "Smith"
+    },
+    {
+        "username": "Bob Johnson",
+        "age": 33,
+        "company": "ikea",
+        "role": "user",
+        "password": "Johnson"
+    },
+    {
+        "username": "Claire Brown",
+        "age": 41,
+        "company": "caressa",
+        "role": "user",
+        "password": "Brown"
+    },
+    {
+        "username": "Daniel Lee",
+        "age": 22,
+        "company": "liddy",
+        "role": "user",
+        "password": "Lee"
+    },
+    {
+        "username": "Emily Davis",
+        "age": 35,
+        "company": "ikea",
+        "role": "admin",
+        "password": "Davis"
+    },
+    {
+        "username": "Frank Wilson",
+        "age": 28,
+        "company": "caressa",
+        "role": "user",
+        "password": "Wilson"
+    },
+    {
+        "username": "Grace Kim",
+        "age": 30,
+        "company": "marcos",
+        "role": "user",
+        "password": "Kim"
+    },
+    {
+        "username": "Henry Thompson",
+        "age": 27,
+        "company": "liddy",
+        "role": "user",
+        "password": "Thompson"
+    },
+    {
+        "username": "Isabella Martinez",
+        "age": 24,
+        "company": "caressa",
+        "role": "user",
+        "password": "Martinez"
+    },
+    {
+        "username": "Jack White",
+        "age": 39,
+        "company": "ikea",
+        "role": "user",
+        "password": "White"
+    }
+]

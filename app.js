@@ -1,10 +1,15 @@
 require('dotenv').config()
 const express = require('express')
 const jwt = require('jsonwebtoken')
+const connectDB = require('./db/connect')
 const mainRouter = require('./routes/main')
 
+const notFound = require('./errors/not-found')
+const errorHandlerMiddleware = require('./errors/error-handler')
+
+
 const app = express()
-const port = 3000
+const port = 3000 || process.env.PORT
 
 // Middleware to parse JSON
 app.use(express.json())
@@ -14,13 +19,17 @@ app.use(express.json())
 app.use('/api/v1', mainRouter)
 
 
+// Not found middleware
+app.use(notFound)
 
-// we create an admin route where only the admin role can access
+// Global error handler
+app.use(errorHandlerMiddleware)
 
 
-
-const start = (port) => {
+const start = async () => {
     try {
+        await connectDB(process.env.MONGO_URI)
+        console.log('Connected to DB')
         app.listen(port, () => {
             console.log(`Server running on port: ${port}...`)
         })
@@ -29,4 +38,4 @@ const start = (port) => {
     }
 }
 
-start(port || process.env.PORT)
+start()

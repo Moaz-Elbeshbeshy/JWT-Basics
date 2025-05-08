@@ -1,27 +1,35 @@
-const { blacklistedTokens } = require('../controller/main')
+const blacklistedTokenMap = require('../models/blacklistedToken')
 const jwt = require('jsonwebtoken')
+const { StatusCodes } = require('http-status-codes')
+const CustomAPIError = require('../errors/custome-error')
 
-
-const verifyToken = (req, res, next) => {
-
+const verifyToken = async (req, res, next) => {
     const authHeader = req.headers['authorization']
     if (!authHeader) {
-        return res.status(400).json({ message: 'Problem with authHeader' })
+        throw new CustomAPIError('Authorization header is missing', StatusCodes.BAD_REQUEST)
     }
-    const token = authHeader.split(' ')[1]
-    if (!token) { return res.status(400).json({ message: 'Token does not exist' }) }
 
-    if (blacklistedTokens.has(token)) { return res.status(403).json({ message: 'Your token is blacklisted' }) }
+    const token = authHeader.split(' ')[1]
+    if (!token) {
+        throw new CustomAPIError('Token is missing from header', StatusCodes.BAD_REQUEST)
+    }
+
+    const blacklisted = await blacklistedTokenMap.findOne({ token })
+    if (blacklisted) {
+        throw new CustomAPIError('This token has been blacklisted', StatusCodes.FORBIDDEN)
+    }
 
     jwt.verify(token, process.env.JWT_TOKEN_KEY, (err, decoded) => {
-        if (err) { return res.status(400).json({ message: 'Error verifying the token' }) }
+        if (err) {
+            throw new CustomAPIError('Invalid or expired token', StatusCodes.UNAUTHORIZED)
+        }
+
         req.userId = decoded.id
         req.role = decoded.role
         req.user = decoded.username
         req.token = token
         next()
     })
-
 }
 
 module.exports = verifyToken
